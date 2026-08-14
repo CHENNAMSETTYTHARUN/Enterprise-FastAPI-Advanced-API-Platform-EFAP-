@@ -1,0 +1,322 @@
+{
+	"info": {
+		"_postman_id": "efap-fastapi-29-modules",
+		"name": "FastAPI 29 Modules Enterprise Platform",
+		"description": "Complete Postman collection for testing all 29 FastAPI modules.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication & Security",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"newuser@company-a.com\",\n  \"password\": \"pass123\",\n  \"full_name\": \"New User\",\n  \"phone\": \"9998887776\",\n  \"tenant_domain\": \"company-a.com\"\n}"
+						},
+						"url": { "raw": "{{base_url}}/api/auth/register", "host": ["{{base_url}}"], "path": ["api", "auth", "register"] }
+					}
+				},
+				{
+					"name": "Login Admin User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@company-a.com\",\n  \"password\": \"admin123\"\n}"
+						},
+						"url": { "raw": "{{base_url}}/api/auth/login", "host": ["{{base_url}}"], "path": ["api", "auth", "login"] }
+					}
+				},
+				{
+					"name": "Get Current User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_token}}" }
+						],
+						"url": { "raw": "{{base_url}}/api/auth/me", "host": ["{{base_url}}"], "path": ["api", "auth", "me"] }
+					}
+				},
+				{
+					"name": "Logout (Token Blacklist)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_token}}" }
+						],
+						"url": { "raw": "{{base_url}}/api/auth/logout", "host": ["{{base_url}}"], "path": ["api", "auth", "logout"] }
+					}
+				},
+				{
+					"name": "Request OTP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"identifier\": \"admin@company-a.com\"\n}"
+						},
+						"url": { "raw": "{{base_url}}/api/auth/otp/request", "host": ["{{base_url}}"], "path": ["api", "auth", "otp", "request"] }
+					}
+				}
+			]
+		},
+		{
+			"name": "Customer Management Modules",
+			"item": [
+				{
+					"name": "Module 1 - API v1 Customer",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_token}}" }
+						],
+						"url": { "raw": "{{base_url}}/api/v1/customers/{{customer_id}}", "host": ["{{base_url}}"], "path": ["api", "v1", "customers", "{{customer_id}}"] }
+					}
+				},
+				{
+					"name": "Module 1 - API v2 Customer",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_token}}" }
+						],
+						"url": { "raw": "{{base_url}}/api/v2/customers/{{customer_id}}", "host": ["{{base_url}}"], "path": ["api", "v2", "customers", "{{customer_id}}"] }
+					}
+				},
+				{
+					"name": "Module 3 - Dynamic Filtering",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_token}}" }
+						],
+						"url": { "raw": "{{base_url}}/api/customers?age__gte=20&name__startswith=Th", "host": ["{{base_url}}"], "path": ["api", "customers"], "query": [{ "key": "age__gte", "value": "20" }, { "key": "name__startswith", "value": "Th" }] }
+					}
+				},
+				{
+					"name": "Module 4 - Advanced Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_token}}" }
+						],
+						"url": { "raw": "{{base_url}}/api/customers/search?q=tharun&page=1&limit=10&sort_by=name&sort_order=asc", "host": ["{{base_url}}"], "path": ["api", "customers", "search"] }
+					}
+				},
+				{
+					"name": "Module 5 - Bulk Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_token}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customers\": [\n    { \"name\": \"Bulk One\", \"email\": \"b1@company-a.com\" },\n    { \"name\": \"Bulk Two\", \"email\": \"b2@company-a.com\" }\n  ]\n}"
+						},
+						"url": { "raw": "{{base_url}}/api/customers/bulk", "host": ["{{base_url}}"], "path": ["api", "customers", "bulk"] }
+					}
+				},
+				{
+					"name": "Module 6 - Check Duplicate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_token}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"tharun@company-a.com\"\n}"
+						},
+						"url": { "raw": "{{base_url}}/api/customers/check-duplicate", "host": ["{{base_url}}"], "path": ["api", "customers", "check-duplicate"] }
+					}
+				},
+				{
+					"name": "Module 8 - Export Customers CSV",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_token}}" }
+						],
+						"url": { "raw": "{{base_url}}/api/customers/export", "host": ["{{base_url}}"], "path": ["api", "customers", "export"] }
+					}
+				},
+				{
+					"name": "Module 16 - Version History",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_token}}" }
+						],
+						"url": { "raw": "{{base_url}}/api/customers/{{customer_id}}/history", "host": ["{{base_url}}"], "path": ["api", "customers", "{{customer_id}}", "history"] }
+					}
+				}
+			]
+		},
+		{
+			"name": "System & Core Services",
+			"item": [
+				{
+					"name": "Module 11 - Sessions List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_token}}" }
+						],
+						"url": { "raw": "{{base_url}}/api/sessions", "host": ["{{base_url}}"], "path": ["api", "sessions"] }
+					}
+				},
+				{
+					"name": "Module 13 - Permissions List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_token}}" }
+						],
+						"url": { "raw": "{{base_url}}/api/permissions/my-permissions", "host": ["{{base_url}}"], "path": ["api", "permissions", "my-permissions"] }
+					}
+				},
+				{
+					"name": "Module 15 - Audit Logs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_token}}" }
+						],
+						"url": { "raw": "{{base_url}}/api/audit-logs", "host": ["{{base_url}}"], "path": ["api", "audit-logs"] }
+					}
+				},
+				{
+					"name": "Module 17 - Create Approval Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_token}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Enterprise Expense Approval\"\n}"
+						},
+						"url": { "raw": "{{base_url}}/api/approvals", "host": ["{{base_url}}"], "path": ["api", "approvals"] }
+					}
+				},
+				{
+					"name": "Module 18 - Concurrent Booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_token}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"resource_id\": \"conference_room_a\",\n  \"booking_time\": \"2026-08-11T15:00:00Z\"\n}"
+						},
+						"url": { "raw": "{{base_url}}/api/bookings", "host": ["{{base_url}}"], "path": ["api", "bookings"] }
+					}
+				},
+				{
+					"name": "Module 19 - Reserve Inventory",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_token}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"item_id\": \"{{item_id}}\",\n  \"quantity\": 1,\n  \"ttl_seconds\": 60\n}"
+						},
+						"url": { "raw": "{{base_url}}/api/inventory/reserve", "host": ["{{base_url}}"], "path": ["api", "inventory", "reserve"] }
+					}
+				},
+				{
+					"name": "Module 20 - Idempotent Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_token}}" },
+							{ "key": "Idempotency-Key", "value": "postman-unique-key-100" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"amount\": 299.50,\n  \"description\": \"Idempotent Subscription Purchase\"\n}"
+						},
+						"url": { "raw": "{{base_url}}/api/orders", "host": ["{{base_url}}"], "path": ["api", "orders"] }
+					}
+				},
+				{
+					"name": "Module 21 - Webhook Receiver",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"event_id\": \"evt_postman_001\",\n  \"event_type\": \"payment.received\",\n  \"data\": { \"amount\": 100 }\n}"
+						},
+						"url": { "raw": "{{base_url}}/api/webhooks/events", "host": ["{{base_url}}"], "path": ["api", "webhooks", "events"] }
+					}
+				},
+				{
+					"name": "Module 23 - External API Data",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{base_url}}/api/external/data", "host": ["{{base_url}}"], "path": ["api", "external", "data"] }
+					}
+				},
+				{
+					"name": "Module 24 - Health Monitoring",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{base_url}}/health", "host": ["{{base_url}}"], "path": ["health"] }
+					}
+				},
+				{
+					"name": "Module 27 - Submit Async Task",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_token}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"task_name\": \"Generate Yearly Report\",\n  \"payload\": \"format=pdf&year=2026\"\n}"
+						},
+						"url": { "raw": "{{base_url}}/api/tasks", "host": ["{{base_url}}"], "path": ["api", "tasks"] }
+					}
+				},
+				{
+					"name": "Module 28 - Performance Benchmark",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{base_url}}/api/performance/benchmark?iterations=500", "host": ["{{base_url}}"], "path": ["api", "performance", "benchmark"] }
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{ "key": "base_url", "value": "http://localhost:8000" },
+		{ "key": "access_token", "value": "" }
+	]
+}
